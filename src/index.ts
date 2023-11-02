@@ -76,6 +76,13 @@ class AssetsHost {
                     },
                 );
             })
+            .get('/assets/essence/list', async () => {
+                return new Response(JSON.stringify(Object.keys(this.essences)), {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+            })
             .get('/assets/essence/:id', async ({ params: { id } }) => {
                 id = id.toUpperCase();
                 const essence = this.essences[id];
