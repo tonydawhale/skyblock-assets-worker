@@ -42,29 +42,39 @@ class AssetsHost {
                         },
                     ),
             )
-            .get('/assets/item/:id', async ({ params: { id } }) => {
-                id = id.toUpperCase();
-                const item = this.assets[id];
-                if (!item) {
-                    return new Response(null, {
-                        status: 404,
-                    });
-                }
+            .get(
+                '/assets/item/:id',
+                async ({ params: { id }, query: { glow } }) => {
+                    id = id.toUpperCase();
+                    const item = this.assets[id];
+                    if (!item) {
+                        return new Response(null, {
+                            status: 404,
+                        });
+                    }
+                    return new Response(
+                        await this.imageUtils.getSkyblockItem(
+                            item,
+                            id,
+                            Boolean(glow),
+                        ),
+                        {
+                            headers: {
+                                'Content-Type': 'image/png',
+                            },
+                        },
+                    );
+                },
+            )
+            .get('/assets/essence/list', async () => {
                 return new Response(
-                    await this.imageUtils.getSkyblockItem(item, id),
+                    JSON.stringify(Object.keys(this.essences)),
                     {
                         headers: {
-                            'Content-Type': 'image/png',
+                            'Content-Type': 'application/json',
                         },
                     },
                 );
-            })
-            .get('/assets/essence/list', async () => {
-                return new Response(JSON.stringify(Object.keys(this.essences)), {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                })
             })
             .get('/assets/essence/:id', async ({ params: { id } }) => {
                 id = id.toUpperCase();

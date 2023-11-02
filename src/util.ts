@@ -36,6 +36,7 @@ export default class ImageUtils {
     public async getSkyblockItem(
         data: SkyblockAsset,
         id: string,
+        addGlow: boolean = false,
     ): Promise<Buffer> {
         if (!existsSync(`./store/${id}.png`)) {
             const item =
@@ -46,9 +47,10 @@ export default class ImageUtils {
                       )
                     : await this.getHead((data as SkyblockHeadAsset).texture);
 
-            const img = data.glowing
-                ? await this.addGlint(item)
-                : item.toBuffer('image/png');
+            const img =
+                data.glowing && addGlow
+                    ? await this.addGlint(item)
+                    : item.toBuffer('image/png');
 
             writeFileSync(`./store/${id}.png`, img);
 
