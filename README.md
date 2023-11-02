@@ -34,7 +34,7 @@ Open http://localhost:25615/ with your browser to see the server run.
 - [x] Head Rendering
 - [x] Item List
 - [ ] Support for texture packs
-- [ ] Support for specifying whether to render the item with an enchant glint or not
+- [x] Support for specifying whether to render the item with an enchant glint or not
 
 ## Technologies used
 - [TypeScript](https://www.typescriptlang.org/)
